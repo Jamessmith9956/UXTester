@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff srcLang="en-US" version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0">
+  <file original="debug_shapes.lua"></file>
+  <file original="logging.lua"></file>
+  <file original="main.lua">
+    <unit id="1ec875c4206c4a95">
+      <segment>
+        <source>UX Demo project</source>
+      </segment>
+    </unit>
+    <unit id="53a3ef892ecf71b2">
+      <segment>
+        <source>split line</source>
+      </segment>
+    </unit>
+  </file>
+  <file original="ux_parts.lua">
+    <unit id="30018647b6e06ab7">
+      <segment>
+        <source>UX_TESTING</source>
+      </segment>
+    </unit>
+  </file>
+</xliff>

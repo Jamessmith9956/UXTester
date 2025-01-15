@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://xmlns.pytha.com/plugin_config/1.0">
+  <header>
+    <guid>273e64d0-648c-4eb7-b37d-94fe344debe8</guid>
+    <version>1.0</version>
+    <pytha-version>26.0</pytha-version>
+    <name>UXTester</name>
+    <description>The description of your plugin goes here.</description>
+    <licensing>Information about the licensing terms goes here.</licensing>
+  </header>
+  <extension type="function">
+    <entry-point>main</entry-point>
+    <caption>UXTester</caption>
+    <description>A short description of the function goes here.</description>
+    <help-file>help.html</help-file>
+  </extension>
+</plugin>
