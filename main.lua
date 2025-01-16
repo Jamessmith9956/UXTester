@@ -33,7 +33,7 @@ function main_dialog(dialog_handle, data)
         if part then
             local bb = pytha.get_element_bounding_box(part)
             bb[1][1] = bb[1][1] -100
-            local id, callback = create_ux_movetool(data, bb[1], function (move_vec)
+            local id, callback = create_ux_move_tool(data, bb[1], nil, function (move_vec)
                 pytha.move_element(part, move_vec)
             end)
             table.insert(data.parts, {ux_parts = {id}, update_callbacks={callback}})
@@ -43,7 +43,14 @@ function main_dialog(dialog_handle, data)
     pyux.set_on_left_dragstart_handler(function (info)
         local part = pyux.identify_part(info.coos_vp)
         if part then
+            -- if ux element, escalate to find the first available history
             local part_hist = pytha.get_element_history(part)
+            if pytha.get_element_attribute(part, 3):find("ux_") ~= nil then
+                while not part_hist and pytha.get_element_parent_group(part) do
+                    part = pytha.get_element_parent_group(part)
+                    part_hist = pytha.get_element_history(part)
+                end
+            end
             if part_hist and part_hist.ux_part_id and data.ux_parts[part_hist.ux_part_id] ~=nil then
                 local tool = data.ux_parts[part_hist.ux_part_id]
                 if tool.on_left_dragstart then
@@ -80,6 +87,24 @@ function main_dialog(dialog_handle, data)
                     end
                 end)
             end
+        elseif info.ctrl_key then
+            local startpoint, endpoint = nil, nil
+            startpoint = pyux.identify_coordinate(info.coos_vp).coos
+            local segment_tool = nil
+            pyux.set_on_left_dragmove_handler(function(info)
+                endpoint = (pyux.identify_coordinate(info.coos_vp) or {}).coos
+                if startpoint and endpoint then
+                    if not segment_tool then
+                        segment_tool = create_ux_linesegment_tool(data, startpoint, endpoint, 1, nil)
+                    else
+                        segment_tool.move_endpoint(endpoint)
+                    end
+                end
+            end)
+            pyux.set_on_left_dragend_handler(function (info)
+                pyux.set_on_left_dragmove_handler(nil)
+                pyux.set_on_left_dragend_handler(nil)
+            end)
         end
     end)
 

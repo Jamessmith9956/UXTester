@@ -20,5 +20,20 @@
         <source>UX_TESTING</source>
       </segment>
     </unit>
+    <unit id="31de454b63824862">
+      <segment>
+        <source>ux_left_bound</source>
+      </segment>
+    </unit>
+    <unit id="6342cd83341660b0">
+      <segment>
+        <source>ux_right_bound</source>
+      </segment>
+    </unit>
+    <unit id="5112757b6e27f15f">
+      <segment>
+        <source>ux_linesegment_tool</source>
+      </segment>
+    </unit>
   </file>
 </xliff>
