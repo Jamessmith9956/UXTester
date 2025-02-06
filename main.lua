@@ -41,52 +41,62 @@ function main_dialog(dialog_handle, data)
         end
     end)
     pyux.set_on_left_dragstart_handler(function (info)
+        pyui.alert("here")
         local part = pyux.identify_part(info.coos_vp)
         if part then
-            -- if ux element, escalate to find the first available history
-            local part_hist = pytha.get_element_history(part)
-            if pytha.get_element_attribute(part, 3):find("ux_") ~= nil then
-                while not part_hist and pytha.get_element_parent_group(part) do
-                    part = pytha.get_element_parent_group(part)
-                    part_hist = pytha.get_element_history(part)
-                end
-            end
-            if part_hist and part_hist.ux_part_id and data.ux_parts[part_hist.ux_part_id] ~=nil then
-                local tool = data.ux_parts[part_hist.ux_part_id]
-                if tool.on_left_dragstart then
-                    tool.on_left_dragstart(info)
-                end
-                if tool.on_left_dragmove then
-                    pyux.set_on_left_dragmove_handler(tool.on_left_dragmove)
-                end
-                if tool.on_left_dragend then
-                    pyux.set_on_left_dragmend_handler(tool.on_left_dragend)
-                end
-            else
-                local origin = pyux.identify_coordinate(info.coos_vp).coos
-                local move_tool = create_move_tool(data, origin)
-                pyux.set_on_left_dragmove_handler(function (info)
-                    local move_vec = move_tool.move(pyux.identify_coordinate(info.coos_vp).coos)
-                    if move_vec then
-                        pytha.move_element(part, move_vec)
-                        if part_hist and part_hist.part_id and data.parts[part_hist.part_id] then
-                            for i, ux_part_id in pairs(data.parts[part_hist.part_id].ux_parts) do
-                                -- pyui.alert(table_tostring(data.ux_parts[ux_part_id]))
-                                data.ux_parts[ux_part_id].update({
-                                    data.ux_parts[ux_part_id].tool.position[1] + move_vec[1],
-                                    data.ux_parts[ux_part_id].tool.position[2] + move_vec[2],
-                                    data.ux_parts[ux_part_id].tool.position[3] + move_vec[3]
-                                })
-                            end
-                            --     -- this doesn't work. we need the updater to handle itself somehow.
-                            --     -- at the sametime we need to have a general handler so that can reuse it.
-                            -- for i, callback in pairs(data.parts[part_hist.part_id].update_callbacks) do
-                            --     callback(origin)
-                            -- end
-                        end
+            local result = pyui.run_modal_subdialog(function(dialog)
+                pyux.set_on_left_dragstart_handler(function(info) pyui.alert("here") end)
+                -- if ux element, escalate to find the first available history
+                local part_hist = pytha.get_element_history(part)
+                if pytha.get_element_attribute(part, 3):find("ux_") ~= nil then
+                    while not part_hist and pytha.get_element_parent_group(part) do
+                        part = pytha.get_element_parent_group(part)
+                        part_hist = pytha.get_element_history(part)
                     end
-                end)
-            end
+                end
+                if part_hist and part_hist.ux_part_id and data.ux_parts[part_hist.ux_part_id] ~=nil then
+                    local tool = data.ux_parts[part_hist.ux_part_id]
+                    if tool.on_left_dragstart then
+                        tool.on_left_dragstart(info)
+                    end
+                    if tool.on_left_dragmove then
+                        pyux.set_on_left_dragmove_handler(tool.on_left_dragmove)
+                    end
+                    if tool.on_left_dragend then
+                        pyux.set_on_left_dragmend_handler(tool.on_left_dragend)
+                    end
+                else
+                    local origin = pyux.identify_coordinate(info.coos_vp).coos
+                    local move_tool = create_move_tool(data, origin)
+                    pyux.set_on_left_dragmove_handler(function (info)
+                        local move_vec = move_tool.move(pyux.identify_coordinate(info.coos_vp).coos)
+                        if move_vec then
+                            pytha.move_element(part, move_vec)
+                            if part_hist and part_hist.part_id and data.parts[part_hist.part_id] then
+                                for i, ux_part_id in pairs(data.parts[part_hist.part_id].ux_parts) do
+                                    -- pyui.alert(table_tostring(data.ux_parts[ux_part_id]))
+                                    data.ux_parts[ux_part_id].update({
+                                        data.ux_parts[ux_part_id].tool.position[1] + move_vec[1],
+                                        data.ux_parts[ux_part_id].tool.position[2] + move_vec[2],
+                                        data.ux_parts[ux_part_id].tool.position[3] + move_vec[3]
+                                    })
+                                end
+                                --     -- this doesn't work. we need the updater to handle itself somehow.
+                                --     -- at the sametime we need to have a general handler so that can reuse it.
+                                -- for i, callback in pairs(data.parts[part_hist.part_id].update_callbacks) do
+                                --     callback(origin)
+                                -- end
+                            end
+                        end
+                    end)
+                end
+                
+                pyux.start_left_drag()
+            end)
+            pyux.set_on_left_dragstart_handler(function(info) pyui.alert("THIS WON'T APPEAR!")end)
+            pyui.start_left_drag()
+            -- pyui.alert("here")
+
         elseif info.ctrl_key then
             local startpoint, endpoint = nil, nil
             startpoint = pyux.identify_coordinate(info.coos_vp).coos
