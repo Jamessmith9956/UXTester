@@ -40,6 +40,8 @@ function create_move_tool(data, origin, move_callback, ux_callback)
 end
 
 
+
+--- combine move_tool_UX_tool
 ---@return number ux_part_id, function update_callback
 function create_ux_move_tool(data, origin, main_group, move_callback)
     local move_tool_part = {
