@@ -93,8 +93,6 @@ function main_dialog(dialog_handle, data)
                 
                 pyux.start_left_drag()
             end)
-            pyux.set_on_left_dragstart_handler(function(info) pyui.alert("THIS WON'T APPEAR!")end)
-            pyui.start_left_drag()
             -- pyui.alert("here")
 
         elseif info.ctrl_key then
