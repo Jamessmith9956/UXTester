@@ -93,6 +93,8 @@ function main_dialog(dialog_handle, data)
                 
                 pyux.start_left_drag()
             end)
+            pyux.start_left_drag()
+
             -- pyui.alert("here")
 
         elseif info.ctrl_key then
@@ -115,5 +117,11 @@ function main_dialog(dialog_handle, data)
             end)
         end
     end)
+    pyux.set_on_left_dragend_handler(function(info)
+        -- pyux.start_left_drag()
+        -- pyui.alert("done")
+    end)
+
+    
 
 end
