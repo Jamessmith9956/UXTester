@@ -122,6 +122,12 @@ function main_dialog(dialog_handle, data)
         -- pyui.alert("done")
     end)
 
-    
+    local drag_btn = dialog_handle:create_button(1, pyloc "drag and drop")
+    drag_btn:set_on_click_handler(function()
+        pyux.set_on_left_dragstart_handler(function (info) pyui.alert("this will never be reached") end)
+        pyux.set_on_left_dragmove_handler(function (info) end)
+        pyux.set_on_left_dragend_handler(function (info) pyui.alert("here") end)
+        pyux.start_left_drag()
+    end)
 
 end

@@ -13,6 +13,11 @@
         <source>split line</source>
       </segment>
     </unit>
+    <unit id="155b4e89a42ec377">
+      <segment>
+        <source>drag and drop</source>
+      </segment>
+    </unit>
   </file>
   <file original="ux_parts.lua">
     <unit id="30018647b6e06ab7">
