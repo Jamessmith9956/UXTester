@@ -8,24 +8,14 @@
         <source>UX Demo project</source>
       </segment>
     </unit>
-    <unit id="53a3ef892ecf71b2">
-      <segment>
-        <source>split line</source>
-      </segment>
-    </unit>
     <unit id="155b4e89a42ec377">
       <segment>
         <source>drag and drop</source>
       </segment>
     </unit>
-    <unit id="5002158b115ea782">
+    <unit id="390fd9003e1e4d05">
       <segment>
-        <source>a</source>
-      </segment>
-    </unit>
-    <unit id="213f366470c1a0e1">
-      <segment>
-        <source>b</source>
+        <source>Dummy button</source>
       </segment>
     </unit>
   </file>
