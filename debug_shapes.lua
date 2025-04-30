@@ -124,3 +124,20 @@ function ux_bounded_arrow_3d(name, origin, axes, length, width, height)
 
     return part
 end
+
+function ux_sphere_3d(name, origin, axes, radius, segments)
+    name = name or "ux_sphere_3d"
+    radius = radius or 150
+    axes = axes or {u_axis={1,0,0}}
+    axes.segments = segments or 10
+    axes.latitude_segments = segments or 10
+    origin = origin or {0,0,0}
+
+    local part = pytha.create_sphere(radius, origin, axes)
+    pytha.push_local_coordinates(origin, axes)
+        pytha.create_element_ref_point(part, {0,0,0})
+        pytha.create_element_ref_point(part, {radius, 0, 0})
+    pytha.pop_local_coordinates()
+    
+    return part
+end

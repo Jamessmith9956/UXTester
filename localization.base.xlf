@@ -28,6 +28,11 @@
         <source>Line 3D</source>
       </segment>
     </unit>
+    <unit id="31f63891e53c10e9">
+      <segment>
+        <source>Sphere</source>
+      </segment>
+    </unit>
     <unit id="72a03b9b301ae147">
       <segment>
         <source>UX Parts</source>

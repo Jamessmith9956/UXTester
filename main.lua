@@ -32,6 +32,7 @@ function main_dialog(dialog_handle, data)
         {name=pyloc "Bounded Arrow 3D", func=ux_bounded_arrow_3d},
         {name=pyloc "Double Chevron 3D", func=ux_double_chevron_3d},
         {name=pyloc "Line 3D", func=ux_line_3d},
+        {name=pyloc "Sphere", func=ux_sphere_3d},
     }
     local ux_part_selection = dialog_handle:create_list_box({1,2}, pyloc "UX Parts")
     for i, k in ipairs(ux_part_name_lookup) do
@@ -70,7 +71,7 @@ function main_dialog(dialog_handle, data)
 
                 local func = ux_part_name_lookup[current_ux_part_idx].func
                 if func then
-                    local part = func(nil, origin, {u_axis=u_axis}, nil, nil, nil)
+                    local part = func(nil, origin, {u_axis=u_axis}, length, nil, nil, nil, nil)
                     table.insert(data.parts, part)
                     if not data.main_group then
                         data.main_group = pytha.create_group(part, {name=pyloc"main_group"})
