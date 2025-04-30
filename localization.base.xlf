@@ -8,14 +8,39 @@
         <source>UX Demo project</source>
       </segment>
     </unit>
+    <unit id="2df4f975729dcbf1">
+      <segment>
+        <source>Arrow 3D</source>
+      </segment>
+    </unit>
+    <unit id="43ec469c1190f60c">
+      <segment>
+        <source>Bounded Arrow 3D</source>
+      </segment>
+    </unit>
+    <unit id="4a966ea1807378c1">
+      <segment>
+        <source>Double Chevron 3D</source>
+      </segment>
+    </unit>
+    <unit id="2a23885730518c4c">
+      <segment>
+        <source>Line 3D</source>
+      </segment>
+    </unit>
+    <unit id="72a03b9b301ae147">
+      <segment>
+        <source>UX Parts</source>
+      </segment>
+    </unit>
     <unit id="155b4e89a42ec377">
       <segment>
         <source>drag and drop</source>
       </segment>
     </unit>
-    <unit id="390fd9003e1e4d05">
+    <unit id="1881d1d3a1f83fbd">
       <segment>
-        <source>Dummy button</source>
+        <source>main_group</source>
       </segment>
     </unit>
   </file>
