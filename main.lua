@@ -27,65 +27,44 @@ function main_dialog(dialog_handle, data)
     local log_a = dialog_handle:create_text_box(1)
     log_a:enable_control(false)
 
-    local ux_part_name_lookup = {
-        {name=pyloc "Arrow 3D", func=ux_arrow_3d},
-        {name=pyloc "Bounded Arrow 3D", func=ux_bounded_arrow_3d},
-        {name=pyloc "Double Chevron 3D", func=ux_double_chevron_3d},
-        {name=pyloc "Line 3D", func=ux_line_3d},
-        {name=pyloc "Sphere", func=ux_sphere_3d},
+    local block_list = {
+        ux_sphere_3d,
+        ux_sphere_3d,
+        ux_sphere_3d,
+        ux_sphere_3d,
     }
-    local ux_part_selection = dialog_handle:create_list_box({1,2}, pyloc "UX Parts")
-    for i, k in ipairs(ux_part_name_lookup) do
-        ux_part_selection:insert_control_item(k.name)
-    end
-    local current_ux_part_idx = 1
-    ux_part_selection:set_control_selection(current_ux_part_idx)
+    local grp_1_els = {}
+    local grp_2_els = {}
+    local grp_1, grp_2
+    local draw_block_btn = dialog_handle:create_button(2, pyloc "Re Create Demo Spheres")
+    draw_block_btn:set_on_click_handler(function ()
+        -- pyui.alert("a")
+        if not data.main_group then
+            data.main_group = pytha.create_group({}, {name= "Main Group"})
+        end
+        pyui.alert("Main Group established")
 
-    local drag_btn = dialog_handle:create_button(1, pyloc "drag and drop")
-    drag_btn:set_on_click_handler(function()
-        drag_btn.state = not drag_btn.state
-        local origin_vp, terminus_vp = nil, nil
-        pyux.set_on_left_dragstart_handler(function (info) end)
-        pyux.set_on_left_dragmove_handler(function (info) log_a:set_control_text(table_tostring(info.coos_vp)) end)
-        pyux.set_on_left_dragend_handler(function (info)
-            origin_vp = info.coos_vp
-            pyux.set_on_left_dragstart_handler(function (info) end)
-            pyux.set_on_left_dragmove_handler(function(info) end)
-            pyux.set_on_left_dragend_handler(function(info) 
-                terminus_vp = info.coos_vp
-                local origin = pyux.identify_coordinate_on_plane(origin_vp, {0,0,0}, {0,0,1})
-                local terminus = pyux.identify_coordinate_on_plane(terminus_vp, {0,0,0}, {0,0,1})
-                local u_axis = {
-                    terminus[1] - origin[1],
-                    terminus[2] - origin[2],
-                    terminus[3] - origin[3],
-                }
-                local length = PYTHAGORAS(u_axis[1], u_axis[2], u_axis[3])
-                if length>0 then
-                    u_axis = {
-                        u_axis[1]/length,
-                        u_axis[2]/length,
-                        u_axis[3]/length,
-                    }
-                end
+        if grp_1 then
+            pytha.delete_element(grp_1)
+        end
+        pyui.alert("First Element Deleted")
 
-                local func = ux_part_name_lookup[current_ux_part_idx].func
-                if func then
-                    local part = func(nil, origin, {u_axis=u_axis}, length, nil, nil, nil, nil)
-                    table.insert(data.parts, part)
-                    if not data.main_group then
-                        data.main_group = pytha.create_group(part, {name=pyloc"main_group"})
-                    else
-                        pytha.set_element_group(part, data.main_group)
-                    end
-                end
-            end)
-            pyux.start_left_drag()
-        end)
-        pyux.start_left_drag()
-    end)
+        if grp_2 then
+            pytha.delete_element(grp_2)
+        end
+        pyui.alert("Final Element Deleted, Main Group dropped")
 
-    ux_part_selection:set_on_change_handler(function (text, index)
-        current_ux_part_idx = index
+        local radius = 150
+        grp_1_els[1] = block_list[1]("part_1", {0,0,0}, nil, radius)
+        grp_1_els[2] = block_list[2]("part_2", {radius*1*2,0,0}, nil, radius)
+        grp_2_els[1] = block_list[3]("part_3", {radius*2*2,0,0}, nil, radius)
+        grp_2_els[2] = block_list[4]("part_4", {radius*3*2,0,0}, nil, radius)
+        -- pyui.alert("d")
+
+        grp_1 = pytha.create_group(grp_1_els, {name = "Balls Grp 1"})
+        grp_2 = pytha.create_group(grp_2_els, {name = "Balls Grp 2"})
+        pyui.alert("Recreated Elements")
+        pytha.set_element_group({grp_1, grp_2}, data.main_group)
+        pyui.alert("Elements attached to dropped Main Group")
     end)
 end
