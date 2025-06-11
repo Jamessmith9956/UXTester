@@ -67,4 +67,41 @@ function main_dialog(dialog_handle, data)
         pytha.set_element_group({grp_1, grp_2}, data.main_group)
         pyui.alert("Elements attached to dropped Main Group")
     end)
+
+    dialog_handle:create_label(1, pyloc "Global Coos")
+    dialog_handle:create_label(2, pyloc "Local Coos")
+    local log_b = dialog_handle:create_text_box(1)
+    local log_c = dialog_handle:create_text_box(2)
+    dialog_handle:create_label({1,2}, pyloc "local corordinate system")
+    local log_d = dialog_handle:create_text_box(1)
+    local log_e = dialog_handle:create_text_box(2)
+    local function test_coordinate_in_area(info)
+        local origin = {2000,0,0}
+        local direction = {1,0,0}
+        local global_coos = pyux.identify_coordinate(info.coos_vp)
+        global_coos = global_coos and global_coos.coos or {}
+        pytha.push_local_coordinates(origin, direction)
+        local coos = pyux.identify_coordinate(info.coos_vp)
+        coos = coos and coos.coos or {}
+        pytha.pop_local_coordinates()
+        log_b:set_control_text("{" .. pyui.format_length(global_coos[1]) .. ", " .. pyui.format_length(global_coos[2]) .. ", " .. pyui.format_length(global_coos[3]) .. "}")
+        log_c:set_control_text("{" .. pyui.format_length(coos[1]) .. ", " .. pyui.format_length(coos[2]) .. ", " .. pyui.format_length(coos[3]) .. "}")
+
+        log_d:set_control_text("{"..pyui.format_length(origin[1])..", "..pyui.format_length(origin[2])..", "..pyui.format_length(origin[3]).."}")
+        log_e:set_control_text("{"..pyui.format_length(direction[1])..", "..pyui.format_length(direction[2])..", "..pyui.format_length(direction[3]).."}")
+    end
+    pyux.set_on_left_click_handler(function (info)
+        test_coordinate_in_area(info)
+    end)
+    local test_coordinate_in_area_btn = dialog_handle:create_button({1,2}, pyloc "Test Coordinate in Area")
+    test_coordinate_in_area_btn:set_on_click_handler(function ()
+        pyux.set_on_left_dragstart_handler(function (info) end)
+        pyux.set_on_left_dragmove_handler(function (info) end)
+        pyux.set_on_left_dragend_handler(function (info)
+            test_coordinate_in_area(info)
+            pyux.set_on_left_dragstart_handler(nil)
+        end)
+        pyux.start_left_drag()
+
+    end)
 end

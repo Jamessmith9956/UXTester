@@ -8,49 +8,29 @@
         <source>UX Demo project</source>
       </segment>
     </unit>
-    <unit id="2df4f975729dcbf1">
+    <unit id="3b76f459dfe13726">
       <segment>
-        <source>Arrow 3D</source>
+        <source>Re Create Demo Spheres</source>
       </segment>
     </unit>
-    <unit id="43ec469c1190f60c">
+    <unit id="3fa863d324452124">
       <segment>
-        <source>Bounded Arrow 3D</source>
+        <source>Global Coos</source>
       </segment>
     </unit>
-    <unit id="4a966ea1807378c1">
+    <unit id="60eceb1060b9ad88">
       <segment>
-        <source>Double Chevron 3D</source>
+        <source>Local Coos</source>
       </segment>
     </unit>
-    <unit id="2a23885730518c4c">
+    <unit id="7438df239bf5dae3">
       <segment>
-        <source>Line 3D</source>
+        <source>local corordinate system</source>
       </segment>
     </unit>
-    <unit id="31f63891e53c10e9">
+    <unit id="3162dda91c9d967b">
       <segment>
-        <source>Sphere</source>
-      </segment>
-    </unit>
-    <unit id="72a03b9b301ae147">
-      <segment>
-        <source>UX Parts</source>
-      </segment>
-    </unit>
-    <unit id="155b4e89a42ec377">
-      <segment>
-        <source>drag and drop</source>
-      </segment>
-    </unit>
-    <unit id="1881d1d3a1f83fbd">
-      <segment>
-        <source>main_group</source>
-      </segment>
-    </unit>
-    <unit id="035fbd14e3d4e12f">
-      <segment>
-        <source>meme</source>
+        <source>Test Coordinate in Area</source>
       </segment>
     </unit>
   </file>
