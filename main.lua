@@ -100,8 +100,51 @@ function main_dialog(dialog_handle, data)
         pyux.set_on_left_dragend_handler(function (info)
             test_coordinate_in_area(info)
             pyux.set_on_left_dragstart_handler(nil)
+            pyui.end_modal_ok()
         end)
-        pyux.start_left_drag()
+        -- pyux.start_left_drag()
+    end)
 
+    local drag_highlight_btn = dialog_handle:create_button(2, pyloc "Drag Highlight")
+    drag_highlight_btn:set_on_click_handler(function ()
+        pyui.run_modal_subdialog(function (dialog)
+            dialog:set_window_title(pyloc "Drag Highlight")
+            local log_length = dialog:create_text_box({1,2}, pyloc "Drag Length")
+            log_length:enable_control(false)
+            dialog:create_ok_button(1)
+            dialog:create_cancel_button(2)
+            
+            local origin, terminus
+            pyux.set_on_left_dragstart_handler(function (info)
+                local coos = pyux.identify_coordinate(info.coos_vp)
+                if not coos then pyui.end_modal_ok() end
+                origin = coos.coos
+            end)
+            pyux.set_on_left_dragmove_handler(function (info)
+                if origin then
+                    local coos = pyux.identify_coordinate(info.coos_vp)
+                    if coos and coos.coos then
+                        terminus = coos.coos                    
+                    end
+                    if origin and terminus then
+                        pyux.clear_highlights()
+                        local length = PYTHAGORAS(terminus[1] - origin[1], terminus[2] - origin[2], terminus[3] - origin[3])
+                        if length then
+                            log_length:set_control_text(pyui.format_length(length))
+                        end
+                        pyux.highlight_line(origin, terminus, {pen=1,arrow=2,tics=true, text=length and pyui.format_length(length) or ""})
+                    end
+                end
+            end)
+            pyux.set_on_left_dragend_handler(function (info)
+                if data.ux_parts.highlight then
+                    pytha.delete_element(data.ux_parts.highlight)
+                    data.ux_parts.highlight = nil
+                end
+                pyux.set_on_left_dragstart_handler(nil)
+                pyui.end_modal_ok()
+            end)
+            pyux.start_left_drag()
+        end)
     end)
 end

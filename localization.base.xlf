@@ -33,6 +33,17 @@
         <source>Test Coordinate in Area</source>
       </segment>
     </unit>
+    <unit id="742e24bfb1a6ec77">
+      <segment>
+        <source>Drag Highlight</source>
+      </segment>
+    </unit>
+    <!--Unit id already exists: "742e24bfb1a6ec77" string: "Drag Highlight"-->
+    <unit id="7add0bf7306dd813">
+      <segment>
+        <source>Drag Length</source>
+      </segment>
+    </unit>
   </file>
   <file original="ux_parts.lua">
     <unit id="30018647b6e06ab7">
